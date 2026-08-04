@@ -1,0 +1,8 @@
+node_modules/
+accounts.json
+runtime/
+data/
+*.log
+.env
+*.session
+*.cookie

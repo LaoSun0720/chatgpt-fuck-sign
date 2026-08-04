@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>纯注册工作台</title>
+  <style>
+    :root { font-family: Inter, "Segoe UI", "Microsoft YaHei", sans-serif; color: #17211d; background: #f3f6f5; }
+    * { box-sizing: border-box; }
+    body { margin: 0; min-width: 320px; }
+    header { background: #fff; border-bottom: 1px solid #dce4e0; }
+    .inner, main { width: min(1120px, calc(100% - 32px)); margin: 0 auto; }
+    header .inner { height: 58px; display: flex; align-items: center; justify-content: space-between; }
+    .header-actions { display: flex; align-items: center; gap: 12px; }
+    .github-link { color: #17211d; text-decoration: none; font-size: 13px; font-weight: 600; }
+    .github-link:hover { color: #087f68; }
+    h1 { margin: 0; font-size: 18px; }
+    main { padding: 24px 0 56px; }
+    .panel { background: #fff; border: 1px solid #dce4e0; margin-bottom: 16px; }
+    .panel-head { min-height: 52px; padding: 12px 16px; border-bottom: 1px solid #e7ece9; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    h2 { margin: 0; font-size: 15px; }
+    .panel-body { padding: 16px; }
+    .summary { display: grid; grid-template-columns: repeat(4, 1fr); background: #fff; border: 1px solid #dce4e0; margin-bottom: 16px; }
+    .metric { padding: 14px 16px; border-right: 1px solid #e7ece9; }
+    .metric:last-child { border-right: 0; }
+    .metric strong { display: block; font-size: 22px; }
+    .metric span, .muted { color: #69766f; font-size: 12px; }
+    .warning { color: #ad2f27; font-size: 12px; font-weight: 600; }
+    label { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+    textarea, input { font: inherit; border: 1px solid #cbd7d1; border-radius: 5px; background: #fff; }
+    textarea { width: 100%; min-height: 170px; resize: vertical; padding: 11px; font: 13px/1.6 Consolas, monospace; }
+    input { height: 38px; padding: 0 10px; width: 120px; }
+    textarea:focus, input:focus { outline: 2px solid #b9e2d4; border-color: #148267; }
+    .controls { display: flex; align-items: end; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+    button { min-height: 38px; padding: 0 14px; border: 1px solid #cbd7d1; border-radius: 5px; background: #fff; cursor: pointer; }
+    button:hover:not(:disabled) { background: #f0f5f2; }
+    button.primary { color: #fff; border-color: #087f68; background: #087f68; font-weight: 600; }
+    button.danger { color: #ad2f27; border-color: #e2b4af; background: #fff8f7; }
+    button:disabled { opacity: .55; cursor: not-allowed; }
+    .progress { display: none; margin-top: 16px; }
+    .progress.show { display: block; }
+    .track { height: 7px; background: #e8eeeb; overflow: hidden; }
+    .fill { height: 100%; width: 0; background: #087f68; transition: width .25s; }
+    .progress-line { display: flex; justify-content: space-between; margin-top: 7px; color: #69766f; font-size: 12px; }
+    .logs { display: none; max-height: 250px; overflow: auto; margin-top: 14px; padding: 10px 12px; background: #18201d; color: #d9e5df; font: 12px/1.65 Consolas, monospace; }
+    .logs.show { display: block; }
+    .log-line { padding: 2px 0; border-bottom: 1px solid #29342f; overflow-wrap: anywhere; }
+    .table-wrap { overflow-x: auto; }
+    table { width: 100%; min-width: 780px; border-collapse: collapse; }
+    th, td { padding: 11px 12px; border-bottom: 1px solid #e7ece9; text-align: left; vertical-align: top; font-size: 12px; }
+    th { color: #69766f; background: #fafcfa; font-weight: 600; }
+    .mail-link { color: #087f68; font: 11px/1.4 Consolas, monospace; overflow-wrap: anywhere; }
+    .status { display: inline-block; padding: 3px 7px; border-radius: 4px; }
+    .status.completed { color: #087f68; background: #e5f6ef; }
+    .status.failed { color: #ad2f27; background: #fff0ee; }
+    .status.running, .status.pending, .status.queued { color: #2e63a4; background: #eef4ff; }
+    .status.no_trial { color: #806000; background: #fff7df; }
+    .error { max-width: 360px; margin-top: 5px; color: #ad2f27; overflow-wrap: anywhere; }
+    .empty { padding: 36px; text-align: center; color: #69766f; }
+    .toast { position: fixed; right: 18px; bottom: 18px; max-width: 420px; padding: 10px 14px; color: #fff; background: #18201d; border-radius: 5px; opacity: 0; transform: translateY(8px); transition: .18s; pointer-events: none; }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    @media (max-width: 680px) { .summary { grid-template-columns: repeat(2, 1fr); } .metric:nth-child(2) { border-right: 0; } .metric:nth-child(-n+2) { border-bottom: 1px solid #e7ece9; } .controls { align-items: stretch; flex-direction: column; } input { width: 100%; } }
+  </style>
+</head>
+<body>
+  <header><div class="inner"><h1>纯注册工作台</h1><div class="header-actions"><span class="muted">仅注册，不连接提炼或扫码</span><a class="github-link" href="https://github.com/LaoSun0720/chatgpt-fuck-sign" target="_blank" rel="noreferrer" aria-label="打开 GitHub 仓库"><span aria-hidden="true">◉</span> GitHub</a></div></div></header>
+  <main>
+    <section class="summary">
+      <div class="metric"><strong id="totalCount">0</strong><span>总账号</span></div>
+      <div class="metric"><strong id="runningCount">0</strong><span>进行中</span></div>
+      <div class="metric"><strong id="successCount">0</strong><span>注册成功</span></div>
+      <div class="metric"><strong id="failedCount">0</strong><span>失败</span></div>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><h2>邮箱注册</h2><span id="jobStatus" class="muted">准备中</span></div>
+      <div class="panel-body">
+        <label for="accountsInput">邮箱列表</label>
+        <textarea id="accountsInput" spellcheck="false" placeholder="user@icloud.com----https://mail.example/messages/key/user%40icloud.com"></textarea>
+        <div class="controls">
+          <div><label for="concurrencyInput">注册并发</label><input id="concurrencyInput" type="number" min="1" max="10" value="2"></div>
+          <button id="startButton" class="primary" type="button">开始注册</button>
+          <button id="pauseButton" type="button" disabled>暂停</button>
+          <button id="forcePauseButton" class="danger" type="button" disabled>强制暂停</button>
+          <span id="parsedCount" class="muted">0/0 个账号</span><span id="duplicateWarning" class="warning" hidden></span>
+        </div>
+        <div id="progressArea" class="progress"><div class="track"><div id="progressFill" class="fill"></div></div><div class="progress-line"><span id="progressText">准备中</span><span id="progressNumbers">0/0</span></div></div>
+        <div id="logs" class="logs"></div>
+      </div>
+    </section>
+    <section class="panel">
+      <div class="panel-head"><h2>注册结果</h2><div><button id="refreshButton" type="button">刷新</button> <button id="exportButton" type="button">导出 Session</button></div></div>
+      <div id="emptyState" class="empty">暂无注册结果</div>
+      <div class="table-wrap"><table id="resultsTable" hidden><thead><tr><th>邮箱与接码链接</th><th>状态</th><th>Password</th><th>Session</th></tr></thead><tbody id="resultsBody"></tbody></table></div>
+    </section>
+  </main>
+  <div id="toast" class="toast" role="status"></div>
+  <script src="/app.js"></script>
+</body>
+</html>
