@@ -9,7 +9,7 @@
 启动：
 
 ```powershell
-cd "C:\Users\Lenovo\AppData\Roaming\TRAE SOLO CN\ModularData\ai-agent\work-mode-projects\6a6dbb89fdb591ec0f29c5d8\chatgpt-register-only"
+cd chatgpt-fuck-sign
 $env:PORT='3032'
 node server.js
 ```
