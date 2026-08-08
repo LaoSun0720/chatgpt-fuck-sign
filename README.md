@@ -1,6 +1,6 @@
 <div align="center">
   <a href="https://api.aixhub.vip">
-    <img src="assets/aixhub-logo.png" width="150" alt="AI XHub">
+    <img src="assets/aiapihub.png" width="150" alt="AI XHub">
   </a>
   <h2><a href="https://api.aixhub.vip">AI XHub 中转站</a></h2>
   <p><strong>不掺水的中转，骗人作者死全家，鸡鸡缩小，出门直接被撞死</strong></p>
